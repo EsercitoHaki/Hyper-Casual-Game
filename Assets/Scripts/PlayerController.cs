@@ -6,11 +6,14 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Setting")]
     [SerializeField] private float moveSpeed;
+    [SerializeField] private int roadWidth;
 
     [Header("Control")]
     [SerializeField] private float slidSpeed;
     private Vector3 clickScreenPosition;
     private Vector3 clickPlayerPositon;
+
+    [SerializeField] private CrowdSystem crowdSystem;
 
     void Start()
     {
@@ -44,6 +47,9 @@ public class PlayerController : MonoBehaviour
 
             Vector3 positon = transform.position;
             positon.x = clickPlayerPositon.x + xScreenDifference;
+
+            positon.x = Mathf.Clamp(positon.x, -roadWidth / 2 + crowdSystem.GetCrowdRadius(), roadWidth / 2 - crowdSystem.GetCrowdRadius());
+
             transform.position = positon;
 
             // transform.position = clickPlayerPositon + Vector3.right * xScreenDifference;
